@@ -1,0 +1,34 @@
+# ensime
+.ensime
+.ensime_lucene
+
+# Tmp files created by vim
+*.swp
+
+# Compiled sources
+*.class
+
+# Anything in target dirs
+target
+build
+
+# Gitbook
+_book
+
+# Ivy caches
+.gradle
+.ivy2.cache
+
+# Hadoop / S3Uploader generated output
+db.out
+tests.log
+
+# Intellij
+*.iml
+*.ipr
+*.iws
+
+# anything in .idea dirs
+.idea
+.idea_modules
+out
