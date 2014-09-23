@@ -1,0 +1,103 @@
+
+// Establish version and status
+ext.githubProjectName = 'hellobrh'
+
+buildscript {
+  repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+  }
+  apply from: file('gradle/buildscript.gradle'), to: buildscript 
+}
+
+allprojects {
+  apply plugin: 'java'
+  apply plugin: 'jacoco'
+  apply plugin: 'idea'
+
+  repositories { 
+    mavenLocal()
+    mavenCentral()
+  }
+
+  jacoco {
+    toolVersion = "0.7.1.201405082137"
+  }
+}
+
+apply from: file('gradle/convention.gradle')
+apply from: file('gradle/maven.gradle')
+apply from: file('gradle/check.gradle')
+apply from: file('gradle/license.gradle')
+apply from: file('gradle/release.gradle')
+
+subprojects {
+  group = "com.netflix.${githubProjectName}"
+
+  sourceCompatibility = 1.7
+  targetCompatibility = 1.7
+
+  tasks.withType(Compile) { 
+    options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation" 
+  }
+
+  javadoc {
+    options {
+      links = ['http://docs.oracle.com/javase/7/docs/api/']
+    }
+  }
+
+  dependencies {
+    compile 'org.slf4j:slf4j-api:1.7.7'
+    testCompile 'junit:junit:4.10'
+    testCompile 'nl.jqno.equalsverifier:equalsverifier:1.4.1'
+  }
+
+  jacocoTestReport {
+    additionalSourceDirs = files(sourceSets.main.allJava.srcDirs)
+    reports {
+      xml.enabled false
+      csv.enabled false
+      html.destination "${buildDir}/reports/jacoco"
+    }
+  }
+
+  task copyDepsToBuild << {
+    ['compile', 'runtime', 'testCompile', 'testRuntime'].each { conf ->
+      delete "${buildDir}/dependencies/${conf}"
+      copy {
+        from configurations[conf]
+        into "${buildDir}/dependencies/${conf}"
+      }
+    }
+  }
+}
+
+project(':helloworld-servlet') {
+  dependencies {
+    compile 'com.google.inject:guice:3.0'
+    compile 'com.google.inject.extensions:guice-servlet:3.0'
+    compile 'com.netflix.eureka:eureka-client:1.1.141'
+    compile 'com.netflix.ribbon:ribbon-eureka:2.0-RC9'
+    compile 'com.netflix.ribbon:ribbon-httpclient:2.0-RC9'
+    compile 'com.netflix.ribbon:ribbon-loadbalancer:2.0-RC9'
+    compile 'javax.servlet:servlet-api:2.5'
+  }
+}
+
+project(':helloworld-war') {
+  apply plugin: 'jetty'
+  apply plugin: 'war'
+
+  dependencies {
+    compile project(':helloworld-servlet')
+    compile 'com.google.inject:guice:3.0'
+    compile 'com.google.inject.extensions:guice-servlet:3.0'
+    compile 'com.netflix.eureka:eureka-client:1.1.141'
+    compile 'com.netflix.karyon:karyon-admin:1.0.26'
+    compile 'com.netflix.karyon:karyon-admin-web:1.0.26'
+    compile 'com.sun.jersey:jersey-json:1.11'
+  }
+}
+

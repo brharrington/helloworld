@@ -1,6 +1,3 @@
-# ensime
-.ensime
-.ensime_lucene
 
 # Tmp files created by vim
 *.swp
@@ -9,19 +6,12 @@
 *.class
 
 # Anything in target dirs
-target
 build
-
-# Gitbook
-_book
+gh-pages-build
 
 # Ivy caches
 .gradle
 .ivy2.cache
-
-# Hadoop / S3Uploader generated output
-db.out
-tests.log
 
 # Intellij
 *.iml
