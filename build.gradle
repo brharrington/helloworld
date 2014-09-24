@@ -35,8 +35,8 @@ apply from: file('gradle/release.gradle')
 subprojects {
   group = "com.netflix.${githubProjectName}"
 
-  sourceCompatibility = 1.7
-  targetCompatibility = 1.7
+  sourceCompatibility = 1.8
+  targetCompatibility = 1.8
 
   tasks.withType(Compile) { 
     options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation" 
@@ -82,6 +82,7 @@ project(':helloworld-servlet') {
     compile 'com.netflix.ribbon:ribbon-eureka:2.0-RC9'
     compile 'com.netflix.ribbon:ribbon-httpclient:2.0-RC9'
     compile 'com.netflix.ribbon:ribbon-loadbalancer:2.0-RC9'
+    compile 'com.netflix.ribbon:ribbon-transport:2.0-RC9'
     compile 'javax.servlet:servlet-api:2.5'
   }
 }
