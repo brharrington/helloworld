@@ -14,8 +14,6 @@ import javax.inject.Singleton;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 
 /**
  * Return the edda content for this instance.
@@ -38,14 +36,6 @@ public class EddaServlet extends BaseServlet {
 
   private String getInstanceId() {
     return System.getenv("EC2_INSTANCE_ID");
-  }
-
-  private void copy(InputStream in, OutputStream out) throws IOException {
-    byte[] buffer = new byte[1024];
-    int length;
-    while ((length = in.read(buffer)) != -1) {
-      out.write(buffer, 0, length);
-    }
   }
 
   @Override public void doGet(final HttpServletRequest req, final HttpServletResponse res) {
