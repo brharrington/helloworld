@@ -96,9 +96,9 @@ project(':helloworld-war') {
     compile 'com.google.inject:guice:3.0'
     compile 'com.google.inject.extensions:guice-servlet:3.0'
     compile 'com.netflix.eureka:eureka-client:1.1.141'
-    compile 'com.netflix.karyon:karyon-admin:1.0.26'
-    compile 'com.netflix.karyon:karyon-admin-web:1.0.26'
-    compile 'com.sun.jersey:jersey-json:1.11'
+    compile 'com.netflix.karyon:karyon-admin:2.1.00-RC6'
+    compile 'com.netflix.karyon:karyon-admin-web:2.1.00-RC6'
+    //compile 'com.sun.jersey:jersey-json:1.11'
   }
 }
 
